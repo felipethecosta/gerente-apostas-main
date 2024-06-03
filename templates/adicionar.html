@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}Adicionar Aposta{% endblock %}
+
+{% block content %}
+<h1>Adicionar Aposta</h1>
+<form method="POST">
+    <div class="form-group">
+        <label for="data">Data (DD/MM/YYYY):</label>
+        <input type="text" class="form-control datepicker" id="data" name="data" required>
+    </div>
+    <div class="form-group">
+        <label for="mandante">Mandante:</label>
+        <input type="text" class="form-control" id="mandante" name="mandante" required>
+    </div>
+    <div class="form-group">
+        <label for="visitante">Visitante:</label>
+        <input type="text" class="form-control" id="visitante" name="visitante" required>
+    </div>
+    <div class="form-group">
+        <label for="tipo_jogo">Mercado:</label>
+        <select class="form-control" id="tipo_jogo" name="tipo_jogo" required>
+            <option value="Escanteio Asiático 1 Tempo">Escanteio Asiático 1 Tempo</option>
+            <option value="Escanteio 1 Tempo">Escanteio 1 Tempo</option>
+            <option value="Outro Mercado 2">Outro Mercado 2</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="confianca">Confiança:</label>
+        <select class="form-control" id="confianca" name="confianca" required>
+            <option value="Alta">Alta</option>
+            <option value="Média">Média</option>
+            <option value="Baixa">Baixa</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="valor">Valor Apostado:</label>
+        <input type="number" class="form-control" id="valor" name="valor" required step="any" required>
+    </div>
+    <div class="form-group">
+        <label for="odd">Odd:</label>
+        <input type="number" class="form-control" id="odd" name="odd" step="any" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Adicionar</button>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const today = new Date();
+        const formattedDate = today.toLocaleDateString('pt-BR').replace(/\//g, '-');
+        document.getElementById('data').value = formattedDate;
+    });
+
+    document.getElementById('data').addEventListener('input', function(event) {
+        this.value = this.value.replace(/[\.\-]/g, '/');
+    });
+</script>
+{% endblock %}

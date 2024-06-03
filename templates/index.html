@@ -1,0 +1,103 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">💰 Banca Inicial</h5>
+                    <p class="card-text">R$ {{ "%.2f"|format(banca.banca_inicial) }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">💼 Banca Atual</h5>
+                    <p class="card-text">R$ {{ "%.2f"|format(banca_atual) }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📈 Lucros</h5>
+                    <p class="card-text">R$ {{ "%.2f"|format(lucro) }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">✅ Total Green</h5>
+                    <p class="card-text">{{ total_green }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">❌ Total Red</h5>
+                    <p class="card-text">{{ total_red }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">🔄 Total Reembolso</h5>
+                    <p class="card-text">{{ total_reembolso }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <form method="POST" action="{{ url_for('recalcular_banca') }}">
+                <button type="submit" class="btn btn-primary">Recalcular Banca</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-3">
+                <div class="card-header text-center">
+                    Últimas Apostas
+                </div>
+                <div class="card-body">
+                    <table class="table table-dark table-striped">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Mandante</th>
+                                <th>Visitante</th>
+                                <th>Resultado</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for aposta in ultimas_apostas %}
+                            <tr>
+                                <td>{{ aposta.data }}</td>
+                                <td>{{ aposta.mandante }}</td>
+                                <td>{{ aposta.visitante }}</td>
+                                <td>{{ aposta.resultado }}</td>
+                                <td>
+                                    <form method="post" action="{{ url_for('listar') }}">
+                                        <input type="hidden" name="index" value="{{ aposta.id }}">
+                                        <select name="resultado" class="form-control">
+                                            <option value="GREEN" {% if aposta.resultado == "GREEN" %}selected{% endif %}>GREEN</option>
+                                            <option value="RED" {% if aposta.resultado == "RED" %}selected{% endif %}>RED</option>
+                                            <option value="REEMBOLSO" {% if aposta.resultado == "REEMBOLSO" %}selected{% endif %}>REEMBOLSO</option>
+                                        </select>
+                                        <button type="submit" class="btn btn-primary mt-1">Atualizar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

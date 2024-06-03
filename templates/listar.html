@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}Listar Apostas{% endblock %}
+
+{% block content %}
+<h1>Listar Apostas</h1>
+<div class="table-responsive">
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Mandante</th>
+                <th>Visitante</th>
+                <th>Tipo de Jogo</th>
+                <th>Confiança</th>
+                <th>Valor</th>
+                <th>Odd</th>
+                <th>Retorno</th>
+                <th>Resultado</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for aposta in apostas %}
+            <tr>
+                <td>{{ aposta.data }}</td>
+                <td>{{ aposta.mandante }}</td>
+                <td>{{ aposta.visitante }}</td>
+                <td>{{ aposta.tipo_jogo }}</td>
+                <td>{{ aposta.confianca }}</td>
+                <td>{{ aposta.valor }}</td>
+                <td>{{ aposta.odd }}</td>
+                <td>{{ aposta.retorno }}</td>
+                <td>
+                    <form method="POST">
+                        <input type="hidden" name="index" value="{{ aposta.id }}">
+                        <select name="resultado" class="form-control">
+                            <option value="pendente" {% if aposta.resultado == 'pendente' %}selected{% endif %}>Pendente</option>
+                            <option value="GREEN" {% if aposta.resultado == 'GREEN' %}selected{% endif %}>GREEN</option>
+                            <option value="RED" {% if aposta.resultado == 'RED' %}selected{% endif %}>RED</option>
+                            <option value="REEMBOLSO" {% if aposta.resultado == 'REEMBOLSO' %}selected{% endif %}>REEMBOLSO</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary mt-2">Atualizar</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="POST">
+                        <input type="hidden" name="remover" value="{{ aposta.id }}">
+                        <button type="submit" class="btn btn-danger">Remover</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
