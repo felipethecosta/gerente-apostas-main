@@ -81,12 +81,13 @@
                                 <td>{{ aposta.visitante }}</td>
                                 <td>{{ aposta.resultado }}</td>
                                 <td>
-                                    <form method="post" action="{{ url_for('listar') }}">
+                                    <form method="post" action="{{ url_for('dashboard') }}">
                                         <input type="hidden" name="index" value="{{ aposta.id }}">
                                         <select name="resultado" class="form-control">
-                                            <option value="GREEN" {% if aposta.resultado == "GREEN" %}selected{% endif %}>GREEN</option>
-                                            <option value="RED" {% if aposta.resultado == "RED" %}selected{% endif %}>RED</option>
-                                            <option value="REEMBOLSO" {% if aposta.resultado == "REEMBOLSO" %}selected{% endif %}>REEMBOLSO</option>
+                                            <option value="pendente" {% if aposta.resultado == 'pendente' %}selected{% endif %}>Pendente</option>
+                                            <option value="GREEN" {% if aposta.resultado == 'GREEN' %}selected{% endif %}>GREEN</option>
+                                            <option value="RED" {% if aposta.resultado == 'RED' %}selected{% endif %}>RED</option>
+                                            <option value="REEMBOLSO" {% if aposta.resultado == 'REEMBOLSO' %}selected{% endif %}>REEMBOLSO</option>
                                         </select>
                                         <button type="submit" class="btn btn-primary mt-1">Atualizar</button>
                                     </form>
